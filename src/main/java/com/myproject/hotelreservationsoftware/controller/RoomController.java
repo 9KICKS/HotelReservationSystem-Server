@@ -10,6 +10,8 @@ import com.myproject.hotelreservationsoftware.service.BookingService;
 import com.myproject.hotelreservationsoftware.service.RoomServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,8 @@ public class RoomController {
     private final RoomServiceInterface roomService;
     private final BookingService bookingService;
 
+    private final Logger logger = LoggerFactory.getLogger(RoomController.class);
+
     @PostMapping("/add/new-room")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomResponse> addNewRoom(
@@ -48,6 +52,7 @@ public class RoomController {
 
     @GetMapping("/room/types")
     public List<String> getRoomTypes() {
+        logger.info("Request received for room types.");
         return roomService.getAllRoomTypes();
     }
 
